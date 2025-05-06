@@ -1,9 +1,12 @@
 import express from 'express'
 import AdminController from '../controller/admin.js'
+import Validate from '../middleware/Validate.js'
+import AdminGuard from '../middleware/AdminGuard.js'
+
 
 const router = express.Router()
 
-router.get('/display-employee',AdminController.DisplayEmployee)
+router.get('/display-employee',Validate,AdminGuard,AdminController.DisplayEmployee)
 
 
 export default router;
