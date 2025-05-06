@@ -38,6 +38,33 @@ const DisplayEmployee = async(req,res)=>{
     }
 }
 
+const DisplayLeaveRequest = async(req,res)=>{
+
+    try {
+        const users = await UserModel.find({})
+
+        const filteredData =  users.filter(
+          user =>  (user.role === 'Manager') && (user.leaveData.length > 0)
+        )
+    
+        res.status(200).send({
+            success:true,
+            message:'Leave Data fetched successfully',
+            filteredData
+        })
+       
+    } catch (error) {
+        res.status(500).send({
+            success:true,
+            message:error.message || 'Internal server error'
+            
+        })
+    }
+
+}
+
+
 export default {
-    DisplayEmployee
+    DisplayEmployee,
+    DisplayLeaveRequest
 }

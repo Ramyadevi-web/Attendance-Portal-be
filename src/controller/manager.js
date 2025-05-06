@@ -26,7 +26,7 @@ const DisplayStaff = async(req,res)=>{
     }
 }
 
-const ActionToLeaveRequest = async(req,res)=>{
+const DisplayLeaveRequest = async(req,res)=>{
 
     try {
         const users = await UserModel.find({})
@@ -79,7 +79,7 @@ const updateAction = async (req,res)=>{
 
 export default {
     DisplayStaff,
-    ActionToLeaveRequest,
+    DisplayLeaveRequest,
     updateAction
 }
    
