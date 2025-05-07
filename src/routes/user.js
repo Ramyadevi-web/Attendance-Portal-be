@@ -11,5 +11,7 @@ router.post('/signIn',UserController.signIn)
 router.post('/signUp',UserController.signUp)
 router.post('/forgotPassword',UserController.forgotPassword)
 router.post('/updatePassword/:token',UserController.updatePassword)
+router.delete('/deleteUser/:id',UserController.deleteUser)
+router.put('/editUser/:id',UserController.editUser)
 
 export default router;

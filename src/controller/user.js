@@ -23,8 +23,7 @@ const signIn = async(req,res) =>{
       
         //comparing the given password with database
         if(await Auth.hashCompare(password,user.password)){
-            
-            
+                
             let token = await Auth.createToken({
                 email:user.email,
                 role:user.role,
@@ -280,6 +279,66 @@ const getAllUser = async (req,res) =>{
     }
    }
 
+   const deleteUser =async (req,res)=>{
+
+    try{
+    const userId = req.params.id;
+  
+    const deletedUser = await UserModel.deleteOne({_id:userId});
+  
+     if(!deletedUser){
+      return res.status(404).send({
+        success:false,
+        message:"User not found"
+      })
+     }
+   
+         res.status(200).send({
+           success: true,
+           message:"User deleted successfully"
+          })
+  
+    }catch(error){
+      res.status(500).send({
+         success:false,
+         error:error.message
+      })
+    }
+  }
+
+  const editUser =async (req,res)=>{
+
+    try{
+    const userId = req.params.id;
+  
+     const resp = await UserModel.findByIdAndUpdate(userId,req.body, { new: true });
+    console.log('re',resp)
+
+    const data = {
+      fullName : resp.firstName + resp.lastName,
+      email : resp.email,
+      role : resp.role
+    }
+  
+     if(!userId){
+      return res.status(404).send({
+        success:false,
+        message:"User not found"
+      })
+     }
+   
+         res.status(200).send({
+           success: true,
+           message:"User updated succesfully"
+          })
+  
+    }catch(error){
+      res.status(500).send({
+         success:false,
+         error:error.message
+      })
+    }
+  }
 
    export default {
     signIn,
@@ -287,5 +346,7 @@ const getAllUser = async (req,res) =>{
     getUserById,
     getAllUser,
     forgotPassword,
-    updatePassword
+    updatePassword,
+    deleteUser,
+    editUser
    }
